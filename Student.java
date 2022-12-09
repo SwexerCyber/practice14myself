@@ -1,9 +1,9 @@
 package com.company;
 import org.w3c.dom.ls.LSOutput;
-
 import java.util.Arrays;
+import java.util.Comparator;
 
-public class Student {
+public class Student implements Comparable {
 
     private String surname;
     private int[] marks;
@@ -82,10 +82,13 @@ public class Student {
 // 1 override equals и закомитить
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        Student st = (Student) obj;
+        return surname.equals(st.surname) &&
+                Arrays.equals(marks, st.marks) &&
+                salary == st.salary &&
+                group.equals(st.group) &&
+                aboutFamily == st.aboutFamily;
     }
-    // Students st = (Students) obj;
-    // return name.equals(st.name) && surname.equals(st.surname);
 
     @Override
     public String toString() {
@@ -95,5 +98,21 @@ public class Student {
                 " Группа - " + group +
                 " Средний балл - " + avgGrade +
                 " Льготность - " + aboutFamily;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Student student = (Student) o;
+//        boolean a = aboutFamily;
+//        boolean b = student.aboutFamily;
+//        if (a && b) return 0;
+//        else
+        // отсортировать по среднему баллу от > к <
+        if (avgGrade > student.avgGrade)
+            return -1;
+        else if(avgGrade < student.avgGrade)
+            return 1;
+        else
+            return 0;
     }
 }
